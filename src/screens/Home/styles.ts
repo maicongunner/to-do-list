@@ -39,6 +39,9 @@ export const styles = StyleSheet.create({
   containerList: {
     backgroundColor: '#1A1A1A',
     flex: 1,
-    width: '100%'
+    width: '100%',
+    paddingTop: 50,
+    paddingRight: 24,
+    paddingLeft: 24
   }
 })
