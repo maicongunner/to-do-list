@@ -43,5 +43,33 @@ export const styles = StyleSheet.create({
     paddingTop: 50,
     paddingRight: 24,
     paddingLeft: 24
+  },
+  containerNumbers: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 22
+  },
+  boxNumber: {
+    flexDirection: 'row'
+  },
+  containerNumbersTitleCreated: {
+    color: '#4EA8DE',
+    fontSize: 14,
+    fontWeight: '700'
+  },
+  containerNumbersTitleCompleted: {
+    color: '#8284FA',
+    fontSize: 14,
+    fontWeight: '700'
+  },
+  containerNumbersText: {
+    marginLeft: 10,
+    backgroundColor: '#333333',
+    borderRadius: 999,
+    color: '#D9D9D9',
+    fontSize: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 3
   }
 })

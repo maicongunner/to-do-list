@@ -16,8 +16,6 @@ export function ItemList({
   handleSetSelected,
   handleRemoveItem,
 }: ItemListProps) {
-  const [isSelected, setIsSelected] = useState(item.isChecked);
-
   return (
     <View style={styles.container}>
       <Checkbox
@@ -25,7 +23,7 @@ export function ItemList({
         onValueChange={() => handleSetSelected(item.id)}
         style={styles.checkbox}
       />
-      <Text style={isSelected ? styles.textItemFinished : styles.textItem}>
+      <Text style={item.isChecked ? styles.textItemFinished : styles.textItem}>
         {item.text}
       </Text>
       <TouchableOpacity

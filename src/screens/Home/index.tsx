@@ -7,14 +7,13 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-
+import { useState } from "react";
 import uuid from "react-native-uuid";
 
 import { ItemList } from "../../components/ItemList";
+import { EmptyList } from "../../components/EmptyList";
 
 import { styles } from "./styles";
-import { useCallback, useState } from "react";
-import { EmptyList } from "../../components/EmptyList";
 
 export interface ItemProps {
   id: number;
@@ -25,43 +24,40 @@ export interface ItemProps {
 export function Home() {
   const [itemName, setItemName] = useState("");
   const [items, setItems] = useState<ItemProps[]>([]);
-  const [totalItemsFinished, setTotalItemsFinished] = useState(0);
+  const [totalItemsCompleted, setTotalItemsCompleted] = useState(0);
 
-  console.log("items", items, "item", itemName);
+  function handleSetSelected(id: number) {
+    const indexItem = items.findIndex((item) => item.id === id);
+    items[indexItem].isChecked = true;
+    setItems(items);
+    setTotalItemsCompleted(totalItemsCompleted + 1);
+  }
 
-  const handleSetSelected = useCallback(
-    (id: number) => {
-      console.log("clicou no id", id);
-    },
-    [items, itemName]
-  );
+  function confirmRemoveItem(id: number) {
+    const item = items.find((item) => item.id === id);
 
-  const confirmRemoveItem = useCallback(
-    (id: number) => {
-      setItems(items.filter((item) => item.id !== id));
-    },
-    [items, itemName]
-  );
+    if (item.isChecked) {
+      setTotalItemsCompleted(totalItemsCompleted - 1);
+    }
 
-  const handleRemoveItem = useCallback(
-    (id: number) => {
-      Alert.alert("Remover task", "Deseja mesmo remover esta task?", [
-        {
-          text: "Sim",
-          onPress: () => confirmRemoveItem(id),
-        },
-        {
-          text: "Não",
-          style: "cancel",
-        },
-      ]);
-    },
-    [items, itemName]
-  );
+    setItems(items.filter((item) => item.id !== id));
+  }
 
-  const handleAddNewItem = useCallback(() => {
+  function handleRemoveItem(id: number) {
+    Alert.alert("Remover task", "Deseja mesmo remover esta task?", [
+      {
+        text: "Sim",
+        onPress: () => confirmRemoveItem(id),
+      },
+      {
+        text: "Não",
+        style: "cancel",
+      },
+    ]);
+  }
+
+  function handleAddNewItem() {
     const itemExists = items.find((item) => item.text == itemName);
-    console.log("itemExists", itemExists);
 
     if (itemName === "") {
       return;
@@ -84,7 +80,7 @@ export function Home() {
     ]);
 
     setItemName("");
-  }, [items, itemName]);
+  }
 
   return (
     <View style={styles.container}>
@@ -107,6 +103,20 @@ export function Home() {
         </TouchableOpacity>
       </View>
       <View style={styles.containerList}>
+        <View style={styles.containerNumbers}>
+          <View style={styles.boxNumber}>
+            <Text style={styles.containerNumbersTitleCreated}>Criadas</Text>
+            <Text style={styles.containerNumbersText}>{items.length}</Text>
+          </View>
+          <View style={styles.boxNumber}>
+            <Text style={styles.containerNumbersTitleCompleted}>
+              Concluídas
+            </Text>
+            <Text style={styles.containerNumbersText}>
+              {totalItemsCompleted}
+            </Text>
+          </View>
+        </View>
         <FlatList
           data={items}
           keyExtractor={(item) => item.id}
