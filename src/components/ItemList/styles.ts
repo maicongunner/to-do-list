@@ -14,12 +14,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     gap: 5,
     marginBottom: 10
-  }, 
-  checkbox: {
-    borderRadius: 10,
-    marginRight: 10,
-    borderColor: '#4EA8DE'
-  },
+  },  
   textItem: {
     marginHorizontal: 5,      
     color: '#F2F2F2',

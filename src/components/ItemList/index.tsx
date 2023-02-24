@@ -1,9 +1,9 @@
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import Checkbox from "expo-checkbox";
 import { ItemProps } from "../../screens/Home";
 
+import { Checkbox } from "../Checkbox";
+
 import { styles } from "./styles";
-import { useState } from "react";
 
 interface ItemListProps {
   item: ItemProps;
@@ -19,9 +19,9 @@ export function ItemList({
   return (
     <View style={styles.container}>
       <Checkbox
-        value={item.isChecked}
-        onValueChange={() => handleSetSelected(item.id)}
-        style={styles.checkbox}
+        id={item.id}
+        isChecked={item.isChecked}
+        handleSetSelected={handleSetSelected}
       />
       <Text style={item.isChecked ? styles.textItemFinished : styles.textItem}>
         {item.text}
